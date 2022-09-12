@@ -20,12 +20,12 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     music.pewPew.play()
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
-    otherSprite.destroy()
-    sprite.destroy(effects.disintegrate, 500)
+    otherSprite.destroy(effects.halo, 500)
+    sprite.destroy(effects.warmRadial, 500)
     info.changeScoreBy(1)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    projectile = sprites.createProjectileFromSprite(img`
+    Projectile_1 = sprites.createProjectileFromSprite(img`
         . . . . . . . . 2 . . . . . . . 
         . . . . . . . 2 2 2 . . . . . . 
         . . . . . . 2 2 2 2 2 . . . . . 
@@ -43,7 +43,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . 1 1 . f f f f f . 1 1 . . 
         . . . 1 1 . . . . . . . 1 1 . . 
         `, mySprite, _5, -100)
-    projectile.startEffect(effects.fire)
+    Projectile_1.startEffect(effects.fire)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy(effects.fire, 500)
@@ -52,7 +52,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     mySprite.startEffect(effects.fire, 1000)
 })
 let myEnemy: Sprite = null
-let projectile: Sprite = null
+let Projectile_1: Sprite = null
 let item: Sprite = null
 let mySprite: Sprite = null
 let _5 = 0
@@ -90,5 +90,12 @@ game.onUpdateInterval(1000, function () {
 forever(function () {
     if (info.score() == 50) {
         game.over(true, effects.confetti)
+    }
+    if (info.life() == 2) {
+        mySprite.startEffect(effects.fire, 50)
+    } else if (info.life() == 1) {
+        mySprite.startEffect(effects.warmRadial, 400)
+    } else {
+        effects.clearParticles(mySprite)
     }
 })
