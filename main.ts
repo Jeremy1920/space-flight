@@ -20,8 +20,8 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     music.pewPew.play()
 })
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
-    otherSprite.destroy(effects.halo, 500)
-    sprite.destroy(effects.warmRadial, 500)
+    otherSprite.destroy()
+    sprite.destroy(effects.bubbles, 500)
     info.changeScoreBy(1)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
